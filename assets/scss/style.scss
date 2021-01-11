@@ -139,7 +139,6 @@ img{
             height: 100%;
             padding: 2rem;
             background-color: var(--second-color);
-            transition: .5s;
         }
     }
     &__item{
@@ -329,12 +328,6 @@ img{
         overflow: hidden;
         
         & img{
-            transition: 1s;
-            cursor: pointer;
-
-            &:hover{
-                transform: scale(1.1);
-            }
         }
     }
 }

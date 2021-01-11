@@ -8,15 +8,16 @@
 
         <!-- =====BOX ICONS===== -->
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-
-        <title>Portfolio website</title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+        <title>Shruti Mistry</title>
     </head>
     <body>
         <!--===== HEADER =====-->
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
-                    <a href="#" class="nav__logo">Shruti</a>
+                    <a href="https://shrutimistry.github.io/"><img class="logo__img" src="assets/images/mylogo.png" alt=""></a>
+                    <!-- <a href="#">Shruti</a> -->
                 </div>
 
                 <div class="nav__menu" id="nav-menu">
@@ -39,8 +40,11 @@
             <!--===== HOME =====-->
             <section class="home bd-grid" id="home">
                 <div class="home__data">
-                    <h1 class="home__title">Hi,<br>I'am <span class="home__title-color">Shruti Mistry</span></h1>
-
+                    <h1 class="home__title" style="margin-bottom: var(--mb-2)">Hi,<br>I'm <span class="home__title-color">Shruti!</span></h1>
+                    <hr class=rounded>
+                    <h1 class="home__title" style="font-size:35px;"> a student software developer </h1>
+                </div>
+                <div>
                     <a href="#" class="button">Contact</a>
                 </div>
 
@@ -51,37 +55,43 @@
                 </div>
 
                 <div class="home__img">    
-                    <img src="assets/images/me.jpg" alt="">
+                    <img style="max-width: 80%;" src="assets/images/me.jpg" alt="">
                 </div>
             </section>
 
             <!--===== ABOUT =====-->
             <section class="about section " id="about">
-                <h2 class="section-title">About</h2>
+                <h2 class="section-title">Hey! You’ve found me!</h2>
 
                 <div class="about__container bd-grid">
-                    <div class="about__img">
-                        <img src="assets/images/about.jpg" alt="">
-                    </div>
                     
                     <div>
-                        <h2 class="about__subtitle">Hi, I'm Shruti Mistry</h2>
-                        <p class="about__text">I am a third year, Computer Science student at the University of Toronto. For me, learning new things is never a hassle and I beleive that to be an excellent coder, you must first be an ardent learner. I love to learn and try new things and constantly build my skills asset.</p>           
-                    </div>                                   
+                        <p style="font-size:1.3rem; font-family: ''Source Sans Pro', 'Cabin', arial'; text-align: center; line-height: 1.6;"> It’s nice to meet you, my name is Shruti Mistry. I am a fourth year Computer Science student specializing in Software Engineering at the University of Toronto. 
+                        <br>
+                        Software Engineering is constantly changing and evolving, I aim to create, innovate and learn new skills to ensure all new technologies are more effective than the last. 
+                        <br> 
+                        I know there’s more space for me to grow, learn and a place for me to solve fun and exciting problems that are yet to come. 
+                        <br>
+                        <br>
+                        Currently, living in Toronto, Canada, I love spending my free time reading Harry Potter for the thousandth time, going for a run whenever I can, skating, and coding in darkmode so it gives me a real hacker vibe ;) </p>         
+                    </div>
+                    <div class="about__img">
+                        <img src="assets/images/about.jpg" alt="">
+                    </div>                                  
                 </div>
             </section>
 
             <!--===== SKILLS =====-->
-            <section class="skills section" id="skills">
+            <section class="skills section" id="skills" style="background-color: #ebf3fdbd;">
                 <h2 class="section-title">Skills</h2>
 
                 <div class="skills__container bd-grid">          
                     <div>
-                        <h2 class="skills__subtitle">Profesional Skills</h2>
-                        <p class="skills__text"> My skills asset and expertise level for the following skill.</p>
+                        <h2 class="skills__subtitle" style="font-family: ''Source Sans Pro', 'Cabin', arial';">Profesional Skills</h2>
+                        <p style="font-size:1.3rem; font-family: ''Source Sans Pro', 'Cabin', arial'; text-align: center; line-height: 1.6;" class="skills__text"> My skills asset and expertise level for the following skill.</p>
                         <div class="skills__data">
                             <div class="skills__names">
-                                <i class='bx bxl-html5 skills__icon'></i>
+                                <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">HTML5</span>
                             </div>
                             <div class="skills__bar skills__html">
@@ -93,7 +103,7 @@
                         </div>
                         <div class="skills__data">
                             <div class="skills__names">
-                                <i class='bx bxl-css3 skills__icon'></i>
+                                <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">CSS3</span>
                             </div>
                             <div class="skills__bar skills__css">
@@ -105,10 +115,10 @@
                         </div>
                         <div class="skills__data">
                             <div class="skills__names">
-                                <i class='bx bxl-javascript skills__icon' ></i>
+                                <i class='bx bxs-paint skills__icon' ></i>
                                 <span class="skills__name">C#</span>
                             </div>
-                            <div class="skills__bar skills__js">
+                            <div class="skills__bar skills__csharp">
                                 
                             </div>
                             <div>
@@ -120,7 +130,7 @@
                                 <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">Python</span>
                             </div>
-                            <div class="skills__bar skills__ux">
+                            <div class="skills__bar skills__python">
                                 
                             </div>
                             <div>
@@ -134,11 +144,11 @@
                                 <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">Java</span>
                             </div>
-                            <div class="skills__bar skills__ux">
+                            <div class="skills__bar skills__java">
                                 
                             </div>
                             <div>
-                                <span class="skills__percentage">95%</span>
+                                <span class="skills__percentage">90%</span>
                             </div>
                         </div>
                         <div class="skills__data">
@@ -146,11 +156,11 @@
                                 <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">ASP.Net</span>
                             </div>
-                            <div class="skills__bar skills__ux">
+                            <div class="skills__bar skills__asp">
                                 
                             </div>
                             <div>
-                                <span class="skills__percentage">95%</span>
+                                <span class="skills__percentage">65%</span>
                             </div>
                         </div>
                         <div class="skills__data">
@@ -158,11 +168,11 @@
                                 <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">Ruby On Rails</span>
                             </div>
-                            <div class="skills__bar skills__ux">
+                            <div class="skills__bar skills__ruby">
                                 
                             </div>
                             <div>
-                                <span class="skills__percentage">80%</span>
+                                <span class="skills__percentage">65%</span>
                             </div>
                         </div>
                         <div class="skills__data">
@@ -170,7 +180,7 @@
                                 <i class='bx bxs-paint skills__icon'></i>
                                 <span class="skills__name">Docker</span>
                             </div>
-                            <div class="skills__bar skills__ux">
+                            <div class="skills__bar skills__docker">
                                 
                             </div>
                             <div>
@@ -185,42 +195,106 @@
                 </div>
             </section>
 
+            
             <!--===== WORK =====-->
-            <section class="work section" id="work">
-                <h2 class="section-title">Work</h2>
+                <!--
+                <section class="work section " id="work" style="background-color: #ebf3fdbd;">
+                <h2 class="section-title">Work Experience</h2>
 
                 <div class="work__container bd-grid">
-                    <div class="work__img">
-                        <img src="assets/img/work1.jpg" alt="">
+                    <div style="width: 200px;" class="about__img">
+                        <img src="assets/images/work1.png" alt="">
+                    </div> 
+                    <div>
+                        <p style="font-size:1.7rem; font-family: 'Courier New','Courier','monospace'; text-align: left; line-height: 1.6; color: #0f91de; font-weight: bold;"> Oracle </p>
+                        <p style="font-size:1.0rem; font-family: 'Courier New','Courier','monospace'; text-align: left; line-height: 0.9; color: #a9a7a7; font-weight: bold;"> (May 2020 - August 2020) </p>
+                        <br>
+                        <p style="font-size:1.3rem; font-family: ''Source Sans Pro', 'Cabin', arial'; font-style: italic; line-height: 1.6;"> Software Developer Intern - Toronto, ON </p>
+                        <br>
+                        <br>
+                        <p style="font-size:1.7rem; font-family: 'Courier New','Courier','monospace'; text-align: left; line-height: 1.6; color: #0f91de; font-weight: bold;"> Oracle </p>
+                        <p style="font-size:1.0rem; font-family: 'Courier New','Courier','monospace'; text-align: left; line-height: 0.9; color: #a9a7a7; font-weight: bold;"> (May 2019 - April 2020) </p>
+                        <br>
+                        <p style="font-size:1.3rem; font-family: ''Source Sans Pro', 'Cabin', arial'; font-style: italic; line-height: 1.6;"> DevOps Intern - Toronto, ON </p>
+                        <hr class=rounded style="margin-top: 10%; width:100%">
+
                     </div>
-                    <div class="work__img">
-                        <img src="assets/img/work2.jpg" alt="">
+                    <div style="width: 200px;" class="about__img">
+                        <img src="assets/images/work2.png" alt="">
+                    </div> 
+                    <div>
+                        <p style="font-size:1.7rem; font-family: 'Courier New','Courier','monospace'; text-align: left; line-height: 1.6; color: #0f91de; font-weight: bold;">Tidal Migrations </p>
+                        <p style="font-size:1.0rem; font-family: 'Courier New','Courier','monospace'; text-align: left; line-height: 0.9; color: #a9a7a7; font-weight: bold;"> (January 2018 - August 2018) </p>
+                        <br>
+                        <p style="font-size:1.3rem; font-family: ''Source Sans Pro', 'Cabin', arial'; font-style: italic; line-height: 1.6;"> API Developer Intern - Toronto, ON </p>
+
+                    </div>
+                                                     
+                </div>
+            </section>
+        -->
+
+            <!--===== PROJECTS =====-->
+                <section class="project section " id="work" style="background-color: #ebf3fdbd;">
+                <h2 class="section-title" >Projects</h2>
+                <div class="projects__container bd-grid">
+                    <div class="projects_allitems">
+                        <div class="project_item">
+                            <h2> <a href="https://github.com/shrutimistry/Buxfer"> <u>Buxfer</u></a> </h2>
+                            <p style="font-size:1.2rem; font-family: ''Source Sans Pro', 'Cabin', arial'; text-align: center; line-height: 1.6;">
+                                <br>
+                                The Buxfer application is a command line application written in C that manages multiple groups, and each group member’s transactions i.e the expenses paid by users. For example, any friend group can utilize this tool to keep track of the transactions between the friends i.e which friend owes who etc. It uses a linked list data structure to store users, groups and transactions.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="project_item">
+                            <h2> <a href="https://github.com/shrutimistry/Team21"><u>Immigration Analytics</u></a> </h2>
+                            <p style="font-size:1.2rem; font-family: ''Source Sans Pro', 'Cabin', arial'; text-align: center; line-height: 1.6;">
+                                <br>
+                                I worked with 4 other classmates in creating this application. Immigration Analytics is a Java application created for the TEQ non-profit organization so that they can easily manage immigrants’ data and generate reports through this application. It allows the TEQ employee to create/revoke accounts for the agencies, add/modify/delete new templates for the agencies to fill out their data, generate specific pdf reports for the data of the immigrants according to their specified requirements.
+                            </p>
+
                     </div>
                 </div>
             </section>
 
             <!--===== CONTACT =====-->
-            <section class="contact section" id="contact">
-                <h2 class="section-title">Contact</h2>
+            <section class="contact section" id="contact" style="background-color: #ebf3fdbd;">
+                <h2 class="section-title" >Contact</h2>
 
                 <div class="contact__container bd-grid">
-                    <form action="" class="contact__form">
+                    <!--<form action="" class="contact__form">
                         <input type="text" placeholder="Name" class="contact__input">
                         <input type="mail" placeholder="Email" class="contact__input">
                         <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
                         <input type="button" value="Enviar" class="contact__button button">
                     </form>
+                -->
+                    <h1 class="skills__subtitle" style="font-size: 1.9rem; font-family: ''Source Sans Pro', 'Cabin', arial'; color: #0f91de; text-align: center;">Looking for Fall 2021 opportunities!</h1>
+                    <embed style="position: relative; display: block;" src="assets/images/resumesept2020_ShrutiMistry.pdf" width="600px" height="550px" />
+                    <p style="font-size:1.4rem; font-family: ''Source Sans Pro', 'Cabin', arial'; text-align: center; line-height: 1.6; margin-top: -400px">
+                     Currently seeking full-time New Grad opportunities in software engineering and back-end/full-stack developement. Available for remote positions or inperson within North America.
+                    </p>
+                    
+
+                        <!--<i class='bx bxs-paint skills__icon'></i> -->
+                        <!--<box-icon class="skills__icon skills__names" name='expand-alt'></box-icon>-->
+                    
+                    <!--<i style="position: absolute;" class='bx bx-expand skills__icon'></i> -->
+                </div>
+                <div>
+                    <a style= "margin-left: -400%;" href="#" class="button">Contact</a>
                 </div>
             </section>
         </main>
 
         <!--===== FOOTER =====-->
         <footer class="footer">
-            <p class="footer__title">Marlon</p>
+            <p class="footer__title">Let's Connect!</p>
             <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+                <a href="https://www.linkedin.com/in/shruti-mistry/" class="footer__icon"><i class='bx bxl-linkedin' ></i></a>
+                <a href="https://github.com/shrutimistry" class="footer__icon"><i class='bx bxl-github' ></i></a>
+                <a href="mailto:shrutivmistry@gmail.com" class="footer__icon"><i class='bx bxs-envelope' ></i></a>
             </div>
             <p>&#169; 2020 copyright all right reserved</p>
         </footer>
