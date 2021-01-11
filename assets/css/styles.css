@@ -505,6 +505,7 @@ hr.rounded {
   .nav__list{
     display: flex;
     padding-top: 0;
+    list-style: none;
   }
   .nav__item{
     margin-left: var(--mb-6);
