@@ -1,9 +1,10 @@
 /*===== GOOGLE FONTS =====*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 /*===== VARIABLES CSS =====*/
+html {overflow: -moz-scrollbars-vertical;}
 :root{
   --header-height: 3rem;
-  --font-semi: 600;     
+  --font-semi: 600;   
 }
 
 
@@ -51,7 +52,7 @@
   box-sizing:border-box;
 }
 html {
-  scroll-behavior: : smooth;
+  scroll-behavior:smooth;
 }
 body {
   margin: var(--header-height) 0 0 0;
@@ -117,7 +118,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--z-fixed);
+  z-index: 100000;
   background-color: #fff;
   box-shadow: 0 1px 4px rgba(146,161,176,.15);
 }
@@ -306,7 +307,6 @@ hr.rounded {
   background-color: var(--first-color);
   height: .25rem;
   border-radius: .5rem;
-  z-index: var(--z-back);
 }
 .skills__html{
   width: 85%;
@@ -389,7 +389,6 @@ hr.rounded {
   border: 4px solid #0e24314d;
   top: 15px;
   border-radius: 50%;
-  z-index: 1;
 }
 
 /* Media queries - Responsive timeline on screens less than 600px wide */
