@@ -110,7 +110,7 @@
     <p class="subtitle">Please RSVP by March 6th 2026</p>
 
     <form action="https://formspree.io/f/xreaoney" method="POST">
-        <label>Full Name</label>
+        <label>Guest Full Name</label>
         <input type="text" name="name" placeholder="Guest Name" required>
 
         <label>Will you attend?</label>
@@ -119,8 +119,14 @@
             <option value="no">Regretfully Decline</option>
         </select>
 
-        <label>Number of Guests</label>
-        <input type="number" name="guests" min="1" max="10" value="1">
+        <label>Guest 2 Full Name</label>
+        <input type="text" name="name" placeholder="Guest Name" required>
+
+        <label>Will you attend?</label>
+        <select name="attendance" required>
+            <option value="yes">Will Attend</option>
+            <option value="no">Regretfully Decline</option>
+        </select>
 
         <label>Dietary Notes</label>
         <textarea name="dietary" rows="3" placeholder="Allergies or preferences?"></textarea>
