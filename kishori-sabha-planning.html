@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kishori Sabha Planning 2026</title>
+  <style>
+    :root {
+      --primary: #6d28d9;
+      --primary-light: #8b5cf6;
+      --accent: #db2777;
+      --bg: #faf5ff;
+      --text: #1e1b4b;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --green: #059669; --green-bg: #ecfdf5;
+      --yellow: #d97706; --yellow-bg: #fffbeb;
+      --red: #dc2626;   --red-bg: #fef2f2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white; padding: 2rem 1.5rem; text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
+    header p  { margin-top: 0.4rem; opacity: .85; font-size: 1rem; }
+    .header-refresh { margin-top: .75rem; }
+    .refresh-btn { background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.4); color: white; padding: .3rem .85rem; border-radius: 20px; font-size: .78rem; cursor: pointer; transition: background .2s; }
+    .refresh-btn:hover { background: rgba(255,255,255,.35); }
+    .sync-banner { display: none; background: #1e1b4b; color: #c4b5fd; text-align: center; font-size: .8rem; padding: .4rem 1rem; }
+
+    .nav-tabs {
+      display: flex; background: white; border-bottom: 2px solid var(--border);
+      overflow-x: auto; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+    .nav-tab {
+      padding: .85rem 1.4rem; cursor: pointer; border: none; background: none;
+      font-size: .93rem; font-weight: 500; color: var(--muted); white-space: nowrap;
+      transition: all .2s; border-bottom: 2px solid transparent; margin-bottom: -2px;
+    }
+    .nav-tab:hover  { color: var(--primary); }
+    .nav-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    .content { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+    .section-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--border); }
+
+    /* Overview */
+    .coord-card { background: linear-gradient(135deg, #ede9fe, #fce7f3); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; border: 1px solid #ddd6fe; }
+    .coord-card h3 { font-size: .9rem; font-weight: 600; color: var(--primary); margin-bottom: .6rem; }
+    .coord-names { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .coord-pill { background: white; padding: .3rem .9rem; border-radius: 20px; font-weight: 600; font-size: .9rem; color: var(--primary); border: 1px solid #ddd6fe; }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .team-card { background: white; border-radius: 12px; padding: 1.25rem; border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,.05); }
+    .team-card h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: .15rem; }
+    .team-card .lead { font-size: .82rem; color: var(--muted); margin-bottom: .75rem; }
+    .member-row { display: flex; justify-content: space-between; align-items: center; padding: .4rem 0; border-bottom: 1px solid var(--border); font-size: .88rem; }
+    .member-row:last-child { border-bottom: none; }
+    .member-name { font-weight: 500; }
+    .member-role { font-size: .78rem; color: var(--muted); text-align: right; max-width: 58%; }
+    .info-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: .75rem 1rem; font-size: .85rem; color: #1d4ed8; }
+
+    /* Schedule */
+    .month-filter { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+    .month-btn { padding: .38rem 1rem; border-radius: 20px; border: 1.5px solid var(--border); background: white; cursor: pointer; font-size: .83rem; font-weight: 500; color: var(--muted); transition: all .2s; }
+    .month-btn:hover  { border-color: var(--primary); color: var(--primary); }
+    .month-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .schedule-list { display: flex; flex-direction: column; gap: .65rem; }
+    .schedule-card { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .schedule-header { display: flex; align-items: center; padding: .8rem 1.2rem; cursor: pointer; gap: .85rem; user-select: none; }
+    .schedule-header:hover { background: #faf5ff; }
+    .schedule-date  { font-weight: 700; font-size: .92rem; min-width: 110px; }
+    .schedule-notes { flex: 1; font-size: .83rem; color: var(--muted); }
+    .status-badge { padding: .18rem .6rem; border-radius: 12px; font-size: .72rem; font-weight: 600; white-space: nowrap; }
+    .status-normal    { background: var(--green-bg); color: var(--green); }
+    .status-special   { background: var(--yellow-bg); color: var(--yellow); }
+    .status-cancelled { background: var(--red-bg);   color: var(--red); }
+    .expand-icon { font-size: .65rem; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+    .schedule-card.open .expand-icon { transform: rotate(180deg); }
+    .schedule-body { display: none; padding: 1rem 1.2rem 1.2rem; border-top: 1px solid var(--border); }
+    .schedule-card.open .schedule-body { display: block; }
+    .sabha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 580px) { .sabha-grid { grid-template-columns: 1fr; } }
+    .sabha-col { border-radius: 8px; padding: .85rem; border: 1px solid #ede9fe; background: #faf5ff; }
+    .sabha-col.k2 { background: #fdf2f8; border-color: #fbcfe8; }
+    .sabha-col h4 { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .65rem; }
+    .sabha-col.k1 h4 { color: var(--primary); }
+    .sabha-col.k2 h4 { color: var(--accent); }
+    .field-row { margin-bottom: .55rem; }
+    .field-label { font-size: .67rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; margin-bottom: .1rem; }
+    .field-value { font-size: .84rem; color: var(--text); }
+    .field-presenter { font-size: .76rem; color: var(--accent); font-style: italic; margin-top: .1rem; }
+    .no-content-msg { text-align: center; color: var(--muted); font-size: .85rem; padding: .5rem; }
+
+    /* Presenters */
+    .search-bar { display: flex; gap: .65rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
+    .search-input { flex: 1; min-width: 200px; padding: .55rem 1rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: .88rem; outline: none; transition: border-color .2s; }
+    .search-input:focus { border-color: var(--primary); }
+    .filter-group { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .filter-btn { padding: .35rem .85rem; border-radius: 20px; border: 1.5px solid var(--border); background: white; cursor: pointer; font-size: .8rem; font-weight: 500; color: var(--muted); transition: all .2s; }
+    .filter-btn:hover  { border-color: var(--primary); color: var(--primary); }
+    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .presenter-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); font-size: .86rem; }
+    .presenter-table th { background: var(--primary); color: white; padding: .7rem 1rem; text-align: left; font-weight: 600; font-size: .77rem; text-transform: uppercase; letter-spacing: .3px; cursor: pointer; user-select: none; white-space: nowrap; }
+    .presenter-table th:hover { background: var(--primary-light); }
+    .presenter-table td { padding: .65rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .presenter-table tr:last-child td { border-bottom: none; }
+    .presenter-table tr:hover td { background: #faf5ff; }
+    .type-badge { padding: .14rem .5rem; border-radius: 10px; font-size: .72rem; font-weight: 700; }
+    .type-Y { background: #dbeafe; color: #1d4ed8; }
+    .type-P { background: #fce7f3; color: #9d174d; }
+    .notes-cell { font-size: .78rem; color: var(--muted); font-style: italic; }
+    .sort-asc::after  { content: ' ▲'; font-size: .6rem; }
+    .sort-desc::after { content: ' ▼'; font-size: .6rem; }
+    .empty-msg { text-align: center; color: var(--muted); padding: 2rem; font-size: .9rem; }
+    .add-presenter-btn { padding: .55rem 1.1rem; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: .88rem; white-space: nowrap; transition: background .2s; }
+    .add-presenter-btn:hover { background: var(--primary-light); }
+    .add-presenter-form { background: white; border: 1.5px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; display: none; }
+    .add-presenter-form.open { display: block; }
+    .add-presenter-form h3 { font-size: .95rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .75rem; margin-bottom: 1rem; }
+    .form-field { display: flex; flex-direction: column; gap: .25rem; }
+    .form-field label { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+    .form-field input, .form-field select { padding: .5rem .75rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: .88rem; outline: none; transition: border-color .2s; color: var(--text); background: white; }
+    .form-field input:focus, .form-field select:focus { border-color: var(--primary); }
+    .form-actions { display: flex; gap: .5rem; justify-content: flex-end; }
+    .form-actions button { padding: .45rem 1rem; border-radius: 8px; border: none; cursor: pointer; font-size: .85rem; font-weight: 600; }
+    .btn-save   { background: var(--primary); color: white; }
+    .btn-save:hover { background: var(--primary-light); }
+    .btn-cancel { background: var(--border); color: var(--text); }
+    .btn-cancel:hover { background: #d1d5db; }
+
+    /* Creative */
+    .creative-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .creative-item { background: white; border-radius: 10px; padding: 1rem 1.2rem; border-left: 4px solid var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,.04); display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .creative-item-text h4 { font-size: .93rem; font-weight: 600; color: var(--primary); margin-bottom: .3rem; }
+    .creative-item-text p  { font-size: .84rem; color: var(--muted); line-height: 1.5; }
+    .creative-delete { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1rem; padding: 0 .25rem; flex-shrink: 0; }
+    .creative-delete:hover { color: var(--red); }
+    .creative-add { display: flex; gap: .5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .creative-add input { flex: 1; min-width: 180px; padding: .55rem 1rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: .88rem; outline: none; transition: border-color .2s; }
+    .creative-add input:focus { border-color: var(--primary); }
+    .creative-add button { padding: .55rem 1.1rem; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: .88rem; }
+    .creative-add button:hover { background: var(--primary-light); }
+
+    /* Schedule edit button */
+    .schedule-edit-btn { margin-left: auto; background: none; border: 1px solid var(--border); border-radius: 6px; padding: .2rem .55rem; font-size: .75rem; color: var(--muted); cursor: pointer; transition: all .2s; flex-shrink: 0; }
+    .schedule-edit-btn:hover { border-color: var(--primary); color: var(--primary); background: #faf5ff; }
+    .add-date-btn { padding: .38rem 1rem; border-radius: 20px; border: 1.5px solid var(--primary); background: white; cursor: pointer; font-size: .83rem; font-weight: 600; color: var(--primary); transition: all .2s; }
+    .add-date-btn:hover { background: var(--primary); color: white; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 16px; padding: 1.5rem; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .modal-header h3 { font-size: 1.05rem; font-weight: 700; color: var(--primary); }
+    .modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted); padding: 0 .25rem; }
+    .modal-close:hover { color: var(--text); }
+    .modal-section { margin-bottom: 1.1rem; }
+    .modal-section-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); margin-bottom: .6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border); display: block; }
+    .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .6rem; }
+    .modal-field { display: flex; flex-direction: column; gap: .2rem; }
+    .modal-field label { font-size: .7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; }
+    .modal-field input, .modal-field select { padding: .45rem .75rem; border: 1.5px solid var(--border); border-radius: 8px; font-size: .86rem; outline: none; transition: border-color .2s; color: var(--text); background: white; }
+    .modal-field input:focus, .modal-field select:focus { border-color: var(--primary); }
+    .modal-sabha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: .6rem; }
+    @media (max-width: 580px) { .modal-sabha-grid { grid-template-columns: 1fr; } }
+    .modal-sabha-col { background: #faf5ff; border: 1px solid #ede9fe; border-radius: 8px; padding: .85rem; }
+    .modal-sabha-col.k2 { background: #fdf2f8; border-color: #fbcfe8; }
+    .modal-sabha-col h4 { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; margin-bottom: .65rem; }
+    .modal-sabha-col.k1 h4 { color: var(--primary); }
+    .modal-sabha-col.k2 h4 { color: var(--accent); }
+    .modal-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .modal-actions-right { display: flex; gap: .5rem; }
+    .btn-delete { background: var(--red-bg); color: var(--red); border: 1px solid #fca5a5; padding: .45rem 1rem; border-radius: 8px; cursor: pointer; font-size: .85rem; font-weight: 600; }
+    .btn-delete:hover { background: #fee2e2; }
+    .btn-modal-save { background: var(--primary); color: white; border: none; padding: .45rem 1.1rem; border-radius: 8px; cursor: pointer; font-size: .85rem; font-weight: 600; }
+    .btn-modal-save:hover { background: var(--primary-light); }
+    .btn-modal-cancel { background: var(--border); color: var(--text); border: none; padding: .45rem 1rem; border-radius: 8px; cursor: pointer; font-size: .85rem; font-weight: 600; }
+    .btn-modal-cancel:hover { background: #d1d5db; }
+
+    @media (max-width: 640px) {
+      header h1 { font-size: 1.45rem; }
+      .presenter-table th, .presenter-table td { padding: .5rem .6rem; font-size: .8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Kishori Sabha Planning</h1>
+  <p>2026 Schedule &amp; Team Directory</p>
+  <div class="header-refresh">
+    <button class="refresh-btn" onclick="syncFromSheets()">&#8635; Refresh from Google Sheets</button>
+  </div>
+</header>
+<div class="sync-banner" id="syncBanner"></div>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('overview', this)">Overview</button>
+  <button class="nav-tab" onclick="showTab('schedule', this)">Schedule</button>
+  <button class="nav-tab" onclick="showTab('presenters', this)">Presenters</button>
+  <button class="nav-tab" onclick="showTab('creative', this)">Creative Ideas</button>
+</nav>
+
+<div class="content">
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="tab-pane active">
+    <div class="coord-card">
+      <h3>Kishori Coordinators</h3>
+      <div class="coord-names">
+        <span class="coord-pill">Mahimaben</span>
+        <span class="coord-pill">Maansiben</span>
+      </div>
+    </div>
+
+    <h2 class="section-title">Sabha Teams</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <h3>K1 Sabha Team</h3>
+        <p class="lead">Led by Shrutiben</p>
+        <div class="member-row"><span class="member-name">Kayla</span><span class="member-role">Canvas poster</span></div>
+        <div class="member-row"><span class="member-name">Tulsi</span><span class="member-role">Send presentations &amp; MC</span></div>
+        <div class="member-row"><span class="member-name">Yatri</span><span class="member-role">Make PPT slides for sabha</span></div>
+        <div class="member-row"><span class="member-name">Mahi</span><span class="member-role">End-of-Sabha announcements + ghosti poll</span></div>
+      </div>
+      <div class="team-card">
+        <h3>K2 Sabha Team</h3>
+        <p class="lead">Led by Avnikaben</p>
+        <div class="member-row"><span class="member-name">Riddhi</span><span class="member-role">Presentations + slides</span></div>
+        <div class="member-row"><span class="member-name">Divi</span><span class="member-role">Presentations + slides</span></div>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      Post-Sabha meetings are held every <strong>2nd and 4th Sunday</strong> of the month.
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div id="tab-schedule" class="tab-pane">
+    <div class="month-filter">
+      <button class="month-btn active" data-month="all">All Months</button>
+      <button class="month-btn" data-month="january">January</button>
+      <button class="month-btn" data-month="february">February</button>
+      <button class="month-btn" data-month="march">March</button>
+      <button class="month-btn" data-month="april">April</button>
+      <button class="month-btn" data-month="may">May</button>
+      <button class="month-btn" data-month="june">June</button>
+      <button class="add-date-btn" onclick="openScheduleModal(null)">+ Add Date</button>
+    </div>
+    <div class="schedule-list" id="scheduleList"></div>
+
+    <!-- Schedule Edit Modal -->
+    <div class="modal-overlay" id="scheduleModal" onclick="if(event.target===this)closeScheduleModal()">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="scheduleModalTitle">Edit Sabha Date</h3>
+          <button class="modal-close" onclick="closeScheduleModal()">&#10005;</button>
+        </div>
+
+        <div class="modal-section">
+          <span class="modal-section-label">Date Info</span>
+          <div class="modal-grid">
+            <div class="modal-field">
+              <label>Date <span style="color:var(--accent)">*</span></label>
+              <input type="text" id="editDate" placeholder="e.g. Jan 4, 2026">
+            </div>
+            <div class="modal-field">
+              <label>Month</label>
+              <select id="editMonth">
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+              </select>
+            </div>
+            <div class="modal-field">
+              <label>Status</label>
+              <select id="editStatus">
+                <option value="normal">Sabha</option>
+                <option value="special">Special Event</option>
+                <option value="cancelled">No Sabha</option>
+              </select>
+            </div>
+            <div class="modal-field">
+              <label>Notes</label>
+              <input type="text" id="editNotes" placeholder="e.g. KST Weekend">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <span class="modal-section-label">Sabha Details</span>
+          <div class="modal-sabha-grid">
+            <div class="modal-sabha-col k1">
+              <h4>K1 Sabha</h4>
+              <div class="modal-grid" style="grid-template-columns:1fr;">
+                <div class="modal-field"><label>MC</label><input type="text" id="editK1mc" placeholder="Name"></div>
+                <div class="modal-field"><label>Dhun / Prarthna</label><input type="text" id="editK1dhun" placeholder="Dhun name"></div>
+                <div class="modal-field"><label>Pres 1 Topic</label><input type="text" id="editK1p1topic" placeholder="Topic"></div>
+                <div class="modal-field"><label>Pres 1 Presenter</label><input type="text" id="editK1p1pres" placeholder="Name"></div>
+                <div class="modal-field"><label>Pres 2 Topic</label><input type="text" id="editK1p2topic" placeholder="Topic"></div>
+                <div class="modal-field"><label>Pres 2 Presenter</label><input type="text" id="editK1p2pres" placeholder="Name"></div>
+              </div>
+            </div>
+            <div class="modal-sabha-col k2">
+              <h4>K2 Sabha</h4>
+              <div class="modal-grid" style="grid-template-columns:1fr;">
+                <div class="modal-field"><label>MC</label><input type="text" id="editK2mc" placeholder="Name"></div>
+                <div class="modal-field"><label>Dhun / Prarthna</label><input type="text" id="editK2dhun" placeholder="Dhun name"></div>
+                <div class="modal-field"><label>Pres 1 Topic</label><input type="text" id="editK2p1topic" placeholder="Topic"></div>
+                <div class="modal-field"><label>Pres 1 Presenter</label><input type="text" id="editK2p1pres" placeholder="Name"></div>
+                <div class="modal-field"><label>Pres 2 Topic</label><input type="text" id="editK2p2topic" placeholder="Topic"></div>
+                <div class="modal-field"><label>Pres 2 Presenter</label><input type="text" id="editK2p2pres" placeholder="Name"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-delete" id="scheduleDeleteBtn" onclick="deleteScheduleEntry()">Delete Date</button>
+          <div class="modal-actions-right">
+            <button class="btn-modal-cancel" onclick="closeScheduleModal()">Cancel</button>
+            <button class="btn-modal-save" onclick="saveScheduleEntry()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESENTERS -->
+  <div id="tab-presenters" class="tab-pane">
+    <div class="search-bar">
+      <input type="text" class="search-input" id="presenterSearch" placeholder="Search name, seva, notes..." oninput="filterPresenters()">
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="setTypeFilter('all', this)">All</button>
+        <button class="filter-btn" onclick="setTypeFilter('Y', this)">Yuvati (Y)</button>
+        <button class="filter-btn" onclick="setTypeFilter('P', this)">Prerak (P)</button>
+      </div>
+      <button class="add-presenter-btn" onclick="toggleAddForm()">+ Add Presenter</button>
+    </div>
+
+    <div class="add-presenter-form" id="addPresenterForm">
+      <h3>New Presenter</h3>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Name <span style="color:var(--accent)">*</span></label>
+          <input type="text" id="newName" placeholder="e.g. Priyaben">
+        </div>
+        <div class="form-field">
+          <label>Y / P</label>
+          <select id="newType">
+            <option value="Y">Yuvati (Y)</option>
+            <option value="P">Prerak (P)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Seva</label>
+          <input type="text" id="newSeva" placeholder="e.g. BST Lead">
+        </div>
+        <div class="form-field">
+          <label>Phone</label>
+          <input type="text" id="newPhone" placeholder="e.g. +1 (408) 555-0000">
+        </div>
+        <div class="form-field">
+          <label>Notes</label>
+          <input type="text" id="newNotes" placeholder="e.g. Good with gujarati">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-cancel" onclick="toggleAddForm()">Cancel</button>
+        <button class="btn-save" onclick="savePresenter()">Save Presenter</button>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="presenter-table" id="presenterTable">
+        <thead>
+          <tr>
+            <th onclick="sortBy('name')">Name</th>
+            <th onclick="sortBy('type')">Y/P</th>
+            <th onclick="sortBy('seva')">Seva</th>
+            <th>Phone</th>
+            <th onclick="sortBy('lastPresented')">Last Presented</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="presenterBody"></tbody>
+      </table>
+    </div>
+    <div id="presenterEmpty" class="empty-msg" style="display:none;">No presenters match your search.</div>
+  </div>
+
+  <!-- CREATIVE -->
+  <div id="tab-creative" class="tab-pane">
+    <h2 class="section-title">Creative Ideas &amp; Suggestions</h2>
+    <ul class="creative-list" id="creativeList">
+      <li class="creative-item">
+        <div class="creative-item-text">
+          <h4>Interactive Ghosti Format</h4>
+          <p>Turn Presentation 2 into a discussion-style ghosti where kishories answer guided questions rather than a one-way presentation. Great for engagement and deeper reflection.</p>
+        </div>
+        <button class="creative-delete" onclick="deleteIdea(this)" title="Remove">&#10005;</button>
+      </li>
+      <li class="creative-item">
+        <div class="creative-item-text">
+          <h4>Satsang Jeopardy</h4>
+          <p>Use a Jeopardy-style quiz for exam prep (already planned for Feb 15 &amp; 22). Consider a reusable Canva template so future prep sessions are quick to set up.</p>
+        </div>
+        <button class="creative-delete" onclick="deleteIdea(this)" title="Remove">&#10005;</button>
+      </li>
+      <li class="creative-item">
+        <div class="creative-item-text">
+          <h4>Monthly Theme Posters</h4>
+          <p>Kayla can create a themed Canva poster each month that visually ties together both presentation topics, helping kishories see the connection.</p>
+        </div>
+        <button class="creative-delete" onclick="deleteIdea(this)" title="Remove">&#10005;</button>
+      </li>
+      <li class="creative-item">
+        <div class="creative-item-text">
+          <h4>Presenter Spotlight</h4>
+          <p>Briefly introduce each presenter at the start of sabha (their seva, how they prepared, or a fun fact). Builds community and encourages others to sign up.</p>
+        </div>
+        <button class="creative-delete" onclick="deleteIdea(this)" title="Remove">&#10005;</button>
+      </li>
+      <li class="creative-item">
+        <div class="creative-item-text">
+          <h4>Post-Sabha Feedback Form</h4>
+          <p>Send a quick 2-question Google Form after each sabha: "What was your biggest takeaway?" and "What topic would you like next?" Mahi can share the link during announcements.</p>
+        </div>
+        <button class="creative-delete" onclick="deleteIdea(this)" title="Remove">&#10005;</button>
+      </li>
+    </ul>
+    <div class="creative-add">
+      <input type="text" id="newIdeaTitle" placeholder="Idea title..." onkeydown="if(event.key==='Enter')addIdea()">
+      <input type="text" id="newIdeaDesc" placeholder="Description (optional)..." onkeydown="if(event.key==='Enter')addIdea()">
+      <button onclick="addIdea()">Add Idea</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── GOOGLE SHEETS CONFIG ────────────────────────────────────────────────────
+// After setting up Google Sheets, paste your published CSV URLs below:
+const SCHEDULE_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb7jSSUnQkjTbDZe8Awfm40hq-tNCqXmZjNiTA2AOjn70QLaqnbkiPy9k4ZlJENKg1wbbWFbqnSqvF/pub?gid=0&single=true&output=csv';
+const PRESENTER_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb7jSSUnQkjTbDZe8Awfm40hq-tNCqXmZjNiTA2AOjn70QLaqnbkiPy9k4ZlJENKg1wbbWFbqnSqvF/pub?gid=318353852&single=true&output=csv';
+
+const schedule = [
+  // JANUARY
+  { date:"Jan 4, 2026",  month:"january",  status:"normal",    notes:"",
+    k1:{ mc:"Pushti", dhun:"Swaminarayan Swami / Shriji ane Sau Santo",
+         pres1:{ topic:"Oneness with Bhagwan Swaminarayan", presenter:"Jankiben Dubal" },
+         pres2:{ topic:"Anubhavi Anandma", presenter:"" } },
+    k2:{ mc:"", dhun:"Samu", pres1:{ topic:"", presenter:"" },
+         pres2:{ topic:"(Guj Pres) Gunatitanand Swami's Powerful Ability to Transform All", presenter:"Saanviben" } } },
+  { date:"Jan 11, 2026", month:"january",  status:"normal",    notes:"",
+    k1:{ mc:"Tulsi", dhun:"Jay Aksharpati Purushottam / Sahajanand Swami Antaryami",
+         pres1:{ topic:"Special Rituals", presenter:"Krishaben" },
+         pres2:{ topic:"Optimism and Kindness - Bhaktachintamani", presenter:"Samtaben" } },
+    k2:{ mc:"", dhun:"Samu", pres1:{ topic:"", presenter:"" }, pres2:{ topic:"", presenter:"" } } },
+  { date:"Jan 18, 2026", month:"january",  status:"cancelled", notes:"RKC: NO K SABHA", k1:null, k2:null },
+  { date:"Jan 25, 2026", month:"january",  status:"special",   notes:"KST Weekend",
+    k1:{ mc:"Mahi", dhun:"Bhajman Swaminarayan / Ahonish Darshan",
+         pres1:{ topic:"Appreciating Diversity", presenter:"Deeti" },
+         pres2:{ topic:"Atma Vichar - Satsang Exam Pretest Paper 1 Prep", presenter:"Sanchalikas" } },
+    k2:{ mc:"", dhun:"Kayla", pres1:{ topic:"", presenter:"" }, pres2:{ topic:"", presenter:"" } } },
+
+  // FEBRUARY
+  { date:"Feb 1, 2026",  month:"february", status:"normal",    notes:"",
+    k1:{ mc:"Srushti", dhun:"Preme Premthi Bolo / Swami Sahajanand Maharaj",
+         pres1:{ topic:"Satsang Diksha", presenter:"Pooja J." },
+         pres2:{ topic:"Divine Memories IV - Satsang Exam Pretest Paper 2 Prep", presenter:"Sanchalikas" } },
+    k2:{ mc:"", dhun:"Suhani", pres1:{ topic:"", presenter:"" }, pres2:{ topic:"", presenter:"" } } },
+  { date:"Feb 7, 2026",  month:"february", status:"special",   notes:"Amrut Cup / Super Bowl / Sat Sabha",
+    k1:{ mc:"Divija", dhun:"Swaminarayan Swami Swaminarayan / Bhav Dharine Bolo Jay Jay",
+         pres1:{ topic:"Mahant Swami Maharaj: The Divine Guru", presenter:"Nidhiben P." },
+         pres2:{ topic:"Mahant Swami Maharaj's Care for All", presenter:"" } },
+    k2:{ mc:"", dhun:"Jharna", pres1:{ topic:"", presenter:"" },
+         pres2:{ topic:"Satsang Exam Review", presenter:"" } } },
+  { date:"Feb 15, 2026", month:"february", status:"normal",    notes:"",
+    k1:{ mc:"Sneha", dhun:"Preme Premthi Bolo / Ahonish Darshan Dejo Re",
+         pres1:{ topic:"Vachanamrut Gadhada I-27", presenter:"Shrutiben M." },
+         pres2:{ topic:"Shiv Bhagwan & Mahashivratri", presenter:"" } },
+    k2:{ mc:"", dhun:"Mischa", pres1:{ topic:"", presenter:"" },
+         pres2:{ topic:"Jeopardy of Pretest Paper 1", presenter:"" } } },
+  { date:"Feb 22, 2026", month:"february", status:"special",   notes:"KST Weekend",
+    k1:{ mc:"Diya", dhun:"", pres1:{ topic:"", presenter:"" }, pres2:{ topic:"", presenter:"" } },
+    k2:{ mc:"", dhun:"Kavya", pres1:{ topic:"", presenter:"" },
+         pres2:{ topic:"Jeopardy of Pretest Paper 2", presenter:"" } } },
+
+  // MARCH
+  { date:"Mar 1, 2026",  month:"march", status:"special",   notes:"Satsang Exam", k1:null, k2:null },
+  { date:"Mar 8, 2026",  month:"march", status:"cancelled", notes:"Education Seminar - NO SABHA",
+    k1:{ mc:"", dhun:"", pres1:{ topic:"", presenter:"" },
+         pres2:{ topic:"Sadguru Muktanand Swami", presenter:"Nakshi" } },
+    k2:{ mc:"", dhun:"", pres1:{ topic:"Holi and Fuldol", presenter:"Rajvee" }, pres2:{ topic:"", presenter:"" } } },
+  { date:"Mar 15, 2026", month:"march", status:"normal",    notes:"",
+    k1:{ mc:"", dhun:"", pres1:{ topic:"Monthly Gujarati Presentation", presenter:"Sachiben P. (premvati - confirmed)" },
+         pres2:{ topic:"Honesty to Oneself, Others and Bhagwan", presenter:"Nidhi" } },
+    k2:{ mc:"", dhun:"", pres1:{ topic:"", presenter:"" }, pres2:{ topic:"", presenter:"" } } },
+  { date:"Mar 22, 2026", month:"march", status:"special",   notes:"Yuvati Outing",
+    k1:{ mc:"", dhun:"", pres1:{ topic:"Spreading the Sarvoparipana of Bhagwan Swaminarayan", presenter:"Bhaktiben Shroff (confirmed)" },
+         pres2:{ topic:"Sarjudas", presenter:"" } },
+    k2:{ mc:"", dhun:"", pres1:{ topic:"", presenter:"" }, pres2:{ topic:"", presenter:"Divi (confirmed)" } } },
+  { date:"Mar 29, 2026", month:"march", status:"cancelled", notes:"Samaiyo - No Sabha",
+    k1:{ mc:"", dhun:"", pres1:{ topic:"Spreading the Sarvoparipana of Bhagwan Swaminarayan", presenter:"Bhaktiben Shroff" },
+         pres2:{ topic:"Praptino Vichar (ghosti style)", presenter:"Roshniben S." } },
+    k2:null },
+
+  // APRIL
+  { date:"Apr 5, 2026",  month:"april", status:"special", notes:"KST Weekend - Mahila Samaiyo", k1:null, k2:null },
+  { date:"Apr 12, 2026", month:"april", status:"normal",  notes:"", k1:null, k2:null },
+  { date:"Apr 19, 2026", month:"april", status:"normal",  notes:"", k1:null, k2:null },
+  { date:"Apr 26, 2026", month:"april", status:"normal",  notes:"", k1:null, k2:null },
+
+  // MAY
+  { date:"May 3, 2026",  month:"may", status:"normal", notes:"", k1:null, k2:null },
+  { date:"May 10, 2026", month:"may", status:"normal", notes:"", k1:null, k2:null },
+  { date:"May 17, 2026", month:"may", status:"normal", notes:"", k1:null, k2:null },
+  { date:"May 25, 2026", month:"may", status:"normal", notes:"", k1:null, k2:null },
+  { date:"May 31, 2026", month:"may", status:"normal", notes:"", k1:null, k2:null },
+
+  // JUNE
+  { date:"Jun 7, 2026",  month:"june", status:"special", notes:"Graduation Sabha",       k1:null, k2:null },
+  { date:"Jun 14, 2026", month:"june", status:"normal",  notes:"",                       k1:null, k2:null },
+  { date:"Jun 21, 2026", month:"june", status:"normal",  notes:"",                       k1:null, k2:null },
+  { date:"Jun 28, 2026", month:"june", status:"special", notes:"Kishore / Kishori Din?", k1:null, k2:null },
+];
+
+const presenters = [
+  { name:"Nidhiben",         phone:"",                  type:"Y", seva:"Balika Sanchalika / RA",  lastPresented:"Mar 15, 2026", notes:"" },
+  { name:"Poojaben J.",      phone:"",                  type:"Y", seva:"NDC",                      lastPresented:"Feb 1, 2026",  notes:"Very creative" },
+  { name:"Samtaben",         phone:"",                  type:"Y", seva:"Yuvati Coordinator",       lastPresented:"Jan 11, 2026", notes:"Good with deep satsang topics" },
+  { name:"Roshniben S.",     phone:"",                  type:"Y", seva:"KRCTL",                    lastPresented:"",             notes:"" },
+  { name:"Priyaben",         phone:"",                  type:"Y", seva:"KST Lead",                 lastPresented:"",             notes:"" },
+  { name:"Rajvee",           phone:"",                  type:"Y", seva:"",                         lastPresented:"Mar 8, 2026",  notes:"Good Orator" },
+  { name:"Twisha",           phone:"",                  type:"Y", seva:"Balika Co-coordinator",    lastPresented:"",             notes:"" },
+  { name:"Ipsita",           phone:"",                  type:"Y", seva:"BST Lead",                 lastPresented:"",             notes:"" },
+  { name:"Nakshi",           phone:"",                  type:"Y", seva:"",                         lastPresented:"Mar 8, 2026",  notes:"" },
+  { name:"Saheli",           phone:"",                  type:"Y", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Diya S.",          phone:"",                  type:"Y", seva:"Shishu Mandal Sanchalika", lastPresented:"",             notes:"" },
+  { name:"Anjali Patel",     phone:"",                  type:"Y", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Ayushi Patel",     phone:"",                  type:"Y", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Ruchiben Parmar",  phone:"",                  type:"Y", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Shalmiben Patel",  phone:"",                  type:"Y", seva:"BST Seva",                 lastPresented:"",             notes:"" },
+  { name:"Manasi Patel",     phone:"",                  type:"Y", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Bhaktiben S.",     phone:"+1 (650) 740-1911", type:"P", seva:"Balika PK",                lastPresented:"Mar 22, 2026", notes:"" },
+  { name:"Roshniben B.",     phone:"+1 (224) 622-4913", type:"P", seva:"FERA",                     lastPresented:"",             notes:"" },
+  { name:"Roshniben P.",     phone:"+1 (601) 983-8828", type:"P", seva:"Balika",                   lastPresented:"",             notes:"" },
+  { name:"Jignaben P.",      phone:"",                  type:"P", seva:"BKY Admin",                lastPresented:"",             notes:"Good with deep satsang topics" },
+  { name:"Ruchiben P.",      phone:"+1 (408) 398-0732", type:"P", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Pratimaben",       phone:"+1 (408) 348-3319", type:"P", seva:"PK",                       lastPresented:"",             notes:"" },
+  { name:"Meeraben",         phone:"+1 (267) 393-1504", type:"P", seva:"Outreach",                 lastPresented:"",             notes:"" },
+  { name:"Katkiben",         phone:"+1 (408) 348-3320", type:"P", seva:"BK Analyst",               lastPresented:"",             notes:"" },
+  { name:"Simaben",          phone:"+1 (925) 321-8079", type:"P", seva:"Outreach",                 lastPresented:"",             notes:"" },
+  { name:"Vaishaliben",      phone:"+1 (267) 994-3874", type:"P", seva:"Y RA",                     lastPresented:"",             notes:"" },
+  { name:"Nidhiben P.",      phone:"(510) 505-4918",    type:"P", seva:"Mahila Karyakar",           lastPresented:"",             notes:"Good with Gujarati" },
+  { name:"Kalgiben",         phone:"(408) 210-4411",    type:"P", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Shrutiben S.",     phone:"+1 (408) 391-9395", type:"P", seva:"Satsang Admin",            lastPresented:"",             notes:"" },
+  { name:"Hemaben (Mayank)", phone:"+1 (415) 845-5096", type:"P", seva:"",                         lastPresented:"",             notes:"" },
+  { name:"Yoginiben",        phone:"",                  type:"P", seva:"",                         lastPresented:"Feb 22, 2026", notes:"Good with deep satsang topics" },
+  { name:"Jankiben D.",      phone:"",                  type:"P", seva:"Outreach",                 lastPresented:"Jan 4, 2026",  notes:"" },
+  { name:"Jeenishaben",      phone:"(815) 641-4493",    type:"P", seva:"Balika Coordinator",       lastPresented:"",             notes:"" },
+  { name:"Kaminiben",        phone:"+1 (831) 261-8259", type:"P", seva:"",                         lastPresented:"",             notes:"" },
+];
+
+let currentMonth = "all";
+let typeFilter   = "all";
+let sortCol      = "name";
+let sortDir      = 1;
+
+function showTab(id, el) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+function renderSchedule() {
+  const indexed = schedule.map((s, i) => ({ ...s, _idx: i }));
+  const data = currentMonth === 'all' ? indexed : indexed.filter(s => s.month === currentMonth);
+  const labels = { normal:'Sabha', special:'Special Event', cancelled:'No Sabha' };
+  document.getElementById('scheduleList').innerHTML = data.map((item, idx) => {
+    const realIdx = item._idx;
+    const hasContent = item.k1 || item.k2;
+    const id = 'card-' + idx;
+    return `
+      <div class="schedule-card" id="${id}">
+        <div class="schedule-header" onclick="toggleCard('${id}')">
+          <span class="schedule-date">${item.date}</span>
+          <span class="schedule-notes">${item.notes}</span>
+          <span class="status-badge status-${item.status}">${labels[item.status]}</span>
+          <button class="schedule-edit-btn" onclick="event.stopPropagation(); openScheduleModal(${realIdx})">Edit</button>
+          ${hasContent ? '<span class="expand-icon">&#9660;</span>' : ''}
+        </div>
+        ${hasContent ? `<div class="schedule-body">${renderBody(item)}</div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+function renderBody(item) {
+  if (!item.k1 && !item.k2) return `<div class="no-content-msg">No details recorded for this date.</div>`;
+  const buildCol = (data, cls) => {
+    if (!data) return '';
+    const f = (label, val, sub) => val ? `
+      <div class="field-row">
+        <div class="field-label">${label}</div>
+        <div class="field-value">${val}</div>
+        ${sub ? `<div class="field-presenter">&#8212; ${sub}</div>` : ''}
+      </div>` : '';
+    return `<div class="sabha-col ${cls}">
+      <h4>${cls === 'k1' ? 'K1 Sabha' : 'K2 Sabha'}</h4>
+      ${f('MC', data.mc)}
+      ${f('Dhun / Prarthna', data.dhun)}
+      ${f('Presentation 1', data.pres1 && data.pres1.topic, data.pres1 && data.pres1.presenter)}
+      ${f('Presentation 2', data.pres2 && data.pres2.topic, data.pres2 && data.pres2.presenter)}
+    </div>`;
+  };
+  return `<div class="sabha-grid">${buildCol(item.k1,'k1')}${buildCol(item.k2,'k2')}</div>`;
+}
+
+function toggleCard(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+document.querySelectorAll('.month-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentMonth = this.dataset.month;
+    renderSchedule();
+  });
+});
+
+function setTypeFilter(type, el) {
+  typeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  filterPresenters();
+}
+
+function filterPresenters() {
+  const q = document.getElementById('presenterSearch').value.toLowerCase();
+  let data = [...presenters];
+  if (typeFilter !== 'all') data = data.filter(p => p.type === typeFilter);
+  if (q) data = data.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.seva.toLowerCase().includes(q) ||
+    p.notes.toLowerCase().includes(q) ||
+    p.phone.includes(q)
+  );
+  data.sort((a, b) => (a[sortCol] || '').localeCompare(b[sortCol] || '') * sortDir);
+  document.getElementById('presenterBody').innerHTML = data.map(p => `
+    <tr>
+      <td><strong>${p.name}</strong></td>
+      <td><span class="type-badge type-${p.type}">${p.type}</span></td>
+      <td>${p.seva || '<span style="color:var(--muted)">&#8212;</span>'}</td>
+      <td>${p.phone ? `<a href="tel:${p.phone}" style="color:var(--primary);text-decoration:none;">${p.phone}</a>` : '<span style="color:var(--muted)">&#8212;</span>'}</td>
+      <td>${p.lastPresented || '<span style="color:var(--muted)">&#8212;</span>'}</td>
+      <td class="notes-cell">${p.notes || ''}</td>
+    </tr>`).join('');
+  const empty = document.getElementById('presenterEmpty');
+  const table = document.getElementById('presenterTable');
+  empty.style.display = data.length === 0 ? 'block' : 'none';
+  table.style.display  = data.length === 0 ? 'none'  : '';
+}
+
+function sortBy(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  const cols = ['name','type','seva','phone','lastPresented','notes'];
+  document.querySelectorAll('.presenter-table th').forEach((th, i) => {
+    th.classList.remove('sort-asc','sort-desc');
+    if (cols[i] === col) th.classList.add(sortDir === 1 ? 'sort-asc' : 'sort-desc');
+  });
+  filterPresenters();
+}
+
+let editingScheduleIdx = null;
+
+function openScheduleModal(idx) {
+  editingScheduleIdx = idx;
+  const item = idx !== null ? schedule[idx] : null;
+  document.getElementById('scheduleModalTitle').textContent = idx !== null ? 'Edit Sabha Date' : 'Add Sabha Date';
+  document.getElementById('scheduleDeleteBtn').style.display = idx !== null ? '' : 'none';
+
+  document.getElementById('editDate').value   = item ? item.date   : '';
+  document.getElementById('editMonth').value  = item ? item.month  : 'january';
+  document.getElementById('editStatus').value = item ? item.status : 'normal';
+  document.getElementById('editNotes').value  = item ? item.notes  : '';
+
+  const k1 = item && item.k1;
+  document.getElementById('editK1mc').value      = k1 ? k1.mc : '';
+  document.getElementById('editK1dhun').value    = k1 ? k1.dhun : '';
+  document.getElementById('editK1p1topic').value = k1 && k1.pres1 ? k1.pres1.topic : '';
+  document.getElementById('editK1p1pres').value  = k1 && k1.pres1 ? k1.pres1.presenter : '';
+  document.getElementById('editK1p2topic').value = k1 && k1.pres2 ? k1.pres2.topic : '';
+  document.getElementById('editK1p2pres').value  = k1 && k1.pres2 ? k1.pres2.presenter : '';
+
+  const k2 = item && item.k2;
+  document.getElementById('editK2mc').value      = k2 ? k2.mc : '';
+  document.getElementById('editK2dhun').value    = k2 ? k2.dhun : '';
+  document.getElementById('editK2p1topic').value = k2 && k2.pres1 ? k2.pres1.topic : '';
+  document.getElementById('editK2p1pres').value  = k2 && k2.pres1 ? k2.pres1.presenter : '';
+  document.getElementById('editK2p2topic').value = k2 && k2.pres2 ? k2.pres2.topic : '';
+  document.getElementById('editK2p2pres').value  = k2 && k2.pres2 ? k2.pres2.presenter : '';
+
+  document.getElementById('scheduleModal').classList.add('open');
+}
+
+function closeScheduleModal() {
+  document.getElementById('scheduleModal').classList.remove('open');
+}
+
+function saveScheduleEntry() {
+  const date = document.getElementById('editDate').value.trim();
+  if (!date) { document.getElementById('editDate').focus(); return; }
+
+  const buildTeam = (prefix) => {
+    const mc   = document.getElementById(`edit${prefix}mc`).value.trim();
+    const dhun = document.getElementById(`edit${prefix}dhun`).value.trim();
+    const p1t  = document.getElementById(`edit${prefix}p1topic`).value.trim();
+    const p1p  = document.getElementById(`edit${prefix}p1pres`).value.trim();
+    const p2t  = document.getElementById(`edit${prefix}p2topic`).value.trim();
+    const p2p  = document.getElementById(`edit${prefix}p2pres`).value.trim();
+    if (!mc && !dhun && !p1t && !p1p && !p2t && !p2p) return null;
+    return { mc, dhun, pres1: { topic: p1t, presenter: p1p }, pres2: { topic: p2t, presenter: p2p } };
+  };
+
+  const entry = {
+    date,
+    month:  document.getElementById('editMonth').value,
+    status: document.getElementById('editStatus').value,
+    notes:  document.getElementById('editNotes').value.trim(),
+    k1: buildTeam('K1'),
+    k2: buildTeam('K2'),
+  };
+
+  if (editingScheduleIdx !== null) {
+    schedule[editingScheduleIdx] = entry;
+  } else {
+    schedule.push(entry);
+  }
+  closeScheduleModal();
+  renderSchedule();
+}
+
+function deleteScheduleEntry() {
+  if (editingScheduleIdx === null) return;
+  if (!confirm('Remove this date from the schedule?')) return;
+  schedule.splice(editingScheduleIdx, 1);
+  closeScheduleModal();
+  renderSchedule();
+}
+
+function toggleAddForm() {
+  document.getElementById('addPresenterForm').classList.toggle('open');
+  document.getElementById('newName').focus();
+}
+
+function savePresenter() {
+  const name = document.getElementById('newName').value.trim();
+  if (!name) { document.getElementById('newName').focus(); return; }
+  presenters.push({
+    name,
+    type: document.getElementById('newType').value,
+    seva: document.getElementById('newSeva').value.trim(),
+    phone: document.getElementById('newPhone').value.trim(),
+    lastPresented: '',
+    notes: document.getElementById('newNotes').value.trim(),
+  });
+  ['newName','newSeva','newPhone','newNotes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('newType').value = 'Y';
+  document.getElementById('addPresenterForm').classList.remove('open');
+  filterPresenters();
+}
+
+function addIdea() {
+  const titleEl = document.getElementById('newIdeaTitle');
+  const descEl  = document.getElementById('newIdeaDesc');
+  const title   = titleEl.value.trim();
+  if (!title) { titleEl.focus(); return; }
+  const li = document.createElement('li');
+  li.className = 'creative-item';
+  li.innerHTML = `
+    <div class="creative-item-text">
+      <h4>${title}</h4>
+      <p>${descEl.value.trim()}</p>
+    </div>
+    <button class="creative-delete" onclick="deleteIdea(this)" title="Remove">&#10005;</button>`;
+  document.getElementById('creativeList').appendChild(li);
+  titleEl.value = '';
+  descEl.value  = '';
+  titleEl.focus();
+}
+
+function deleteIdea(btn) {
+  btn.closest('li').remove();
+}
+
+// ─── CSV PARSING ─────────────────────────────────────────────────────────────
+function parseCSVRow(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { inQ = !inQ; }
+    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += c; }
+  }
+  result.push(cur);
+  return result;
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = parseCSVRow(lines[0]).map(h => h.trim());
+  return lines.slice(1).filter(l => l.trim()).map(line => {
+    const vals = parseCSVRow(line);
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = (vals[i] || '').trim());
+    return obj;
+  });
+}
+
+function rowToSchedule(r) {
+  const hasK1 = r.k1_mc || r.k1_dhun || r.k1_p1_topic || r.k1_p1_presenter || r.k1_p2_topic || r.k1_p2_presenter;
+  const hasK2 = r.k2_mc || r.k2_dhun || r.k2_p1_topic || r.k2_p1_presenter || r.k2_p2_topic || r.k2_p2_presenter;
+  return {
+    date: r.date, month: r.month, status: r.status || 'normal', notes: r.notes || '',
+    k1: hasK1 ? { mc: r.k1_mc, dhun: r.k1_dhun,
+                  pres1: { topic: r.k1_p1_topic, presenter: r.k1_p1_presenter },
+                  pres2: { topic: r.k1_p2_topic, presenter: r.k1_p2_presenter } } : null,
+    k2: hasK2 ? { mc: r.k2_mc, dhun: r.k2_dhun,
+                  pres1: { topic: r.k2_p1_topic, presenter: r.k2_p1_presenter },
+                  pres2: { topic: r.k2_p2_topic, presenter: r.k2_p2_presenter } } : null,
+  };
+}
+
+function rowToPresenter(r) {
+  return { name: r.name, type: r.type || 'Y', seva: r.seva || '', phone: r.phone || '', lastPresented: r.lastPresented || '', notes: r.notes || '' };
+}
+
+// ─── GOOGLE SHEETS SYNC ──────────────────────────────────────────────────────
+async function syncFromSheets() {
+  if (!SCHEDULE_URL && !PRESENTER_URL) return;
+  const banner = document.getElementById('syncBanner');
+  banner.textContent = 'Syncing from Google Sheets...';
+  banner.style.display = 'block';
+  try {
+    const reqs = [];
+    if (SCHEDULE_URL)  reqs.push(fetch(SCHEDULE_URL).then(r => r.text()));
+    if (PRESENTER_URL) reqs.push(fetch(PRESENTER_URL).then(r => r.text()));
+    const results = await Promise.all(reqs);
+    let i = 0;
+    if (SCHEDULE_URL) {
+      schedule.length = 0;
+      parseCSV(results[i++]).filter(r => r.date).forEach(r => schedule.push(rowToSchedule(r)));
+    }
+    if (PRESENTER_URL) {
+      presenters.length = 0;
+      parseCSV(results[i++]).filter(r => r.name).forEach(r => presenters.push(rowToPresenter(r)));
+    }
+    renderSchedule();
+    filterPresenters();
+    banner.textContent = 'Synced from Google Sheets';
+    setTimeout(() => banner.style.display = 'none', 2500);
+  } catch(e) {
+    banner.textContent = 'Could not reach Google Sheets — showing built-in data';
+    setTimeout(() => banner.style.display = 'none', 4000);
+    console.warn('Sheets sync failed:', e);
+  }
+}
+
+renderSchedule();
+filterPresenters();
+syncFromSheets();
+</script>
+</body>
+</html>
